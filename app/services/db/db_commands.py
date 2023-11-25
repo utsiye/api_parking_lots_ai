@@ -1,36 +1,42 @@
-from app.services.db.db_models import User
-import uuid
+import random
+import string
+
+import asyncpg
+
+from .dto.users import UserDTO
 
 
 class DBCommands:
 
-    async def get_or_create_user(self):
-        current_user = types.User.get_current()
+    def __init__(self, conn: asyncpg.Connection):
+        self.conn: asyncpg.Connection = conn
 
-        if current_user:
-            old_user = await User.query.where(User.id == current_user.id).gino.first()
-            if old_user:
-                return old_user
+    async def get_or_create_user(self, _id: str = None, login: str = None, password: str = None) -> UserDTO:
+        res = await self.conn.fetchrow("SELECT * FROM users WHERE id=$1", _id)
 
-            user = User(id=current_user.id, nickname=current_user.username)
-            await user.create()
-            return user
-        else:
+        if res:
+            return UserDTO(id=res.get('id'), login=res.get('login'), password=res.get('password'))
+
+        if not login or not password:
             return None
 
-    async def get_all_users(self):
-        return await User.query.gino.all()
+        _id = await self._generate_id('users')
+        res = await self.conn.fetchrow('INSERT INTO users VALUES ($1, $2, $3) RETURNING *', _id, login, password)
 
-    async def update_user(self, **kwargs):
-        user = await self.get_or_create_user()
-        return await User.update.values(**kwargs).where(User.id == user.id).gino.status()
+        return UserDTO(id=res.get('id'), login=res.get('login'), password=res.get('password'))
 
-    async def is_price_list_exists(self, name):
-        price_list = await PriceList.query.where(PriceList.name == name).gino.first()
+    async def _is_object_id_exist(self, _id: str, table_name: str) -> bool:
+        res = await self.conn.fetchrow(f"SELECT id FROM {table_name} WHERE id=$1", _id)
 
-        if price_list:
+        if res:
             return True
-        return False
+        else:
+            return False
 
-    async def delete_price_list(self, price_list_id):
-        return await PriceList.delete.where(PriceList.id == price_list_id).gino.status()
+    async def _generate_id(self, table_name) -> str:
+
+        for i in range(100):
+            characters = string.ascii_uppercase + string.digits
+            generate_id = ''.join(random.choice(characters) for _ in range(6))
+            if not await self._is_object_id_exist(generate_id, table_name):
+                return generate_id
