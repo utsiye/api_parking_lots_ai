@@ -9,8 +9,8 @@ async def create_all_tables(pool: asyncpg.Pool):
         await conn.execute('''
                 CREATE TABLE IF NOT EXISTS users(
                     id varchar(255) PRIMARY KEY,
-                    login varchar(255) NOT NULL,
-                    password varchar(255) NOT NULL,
+                    login varchar(255) UNIQUE NOT NULL,
+                    password varchar(64) NOT NULL,
                     balance int NOT NULL DEFAULT 10
                 )
             ''')
@@ -49,7 +49,7 @@ async def create_all_tables(pool: asyncpg.Pool):
 async def drop_all_tables(pool):
     async with pool.acquire() as conn:
         await conn.execute("DROP TABLE users CASCADE")
-        logger.info("All tables was dropped")
+        logger.info("All tables were dropped")
 
 
 async def create_db() -> asyncpg.Pool:

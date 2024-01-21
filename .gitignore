@@ -160,8 +160,5 @@ cython_debug/
 .idea/
 .logs/
 
-# Ignore __init__.py files in each folder
-**/__init__.py
-
 # Ignore __pycache__ directory
 __pycache__/

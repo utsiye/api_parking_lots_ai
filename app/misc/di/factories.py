@@ -6,6 +6,8 @@ import asyncpg
 
 from app.services.db.db_commands import DBCommands
 from app.misc.di.stub import Stub
+from app.services.security import Protector
+from app.settings.config import Config, load_config
 
 
 @asynccontextmanager
@@ -22,3 +24,7 @@ async def di_connection_factory(pool: Annotated[asyncpg.Pool, Depends(Stub(async
 
 def di_db_gateway_factory(connection: Annotated[asyncpg.Connection, Depends(Stub(asyncpg.Connection))]) -> DBCommands:
     return DBCommands(conn=connection)
+
+
+def di_protector_factory(conf: Annotated[Config, Depends(Stub(Config))]) -> Protector:
+    return Protector(config=conf.jwt)
