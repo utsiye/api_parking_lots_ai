@@ -36,7 +36,7 @@ async def create_all_tables(pool: asyncpg.Pool):
                 ''')
 
         await conn.execute('''
-                CREATE TABLE IF NOT EXISTS transactions(
+                CREATE TABLE IF NOT EXISTS payments(
                     user_id varchar(255) REFERENCES users(id),
                     transaction_id varchar(255) PRIMARY KEY NOT NULL,
                     datetime timestamp NOT NULL,

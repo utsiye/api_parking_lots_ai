@@ -12,23 +12,23 @@ class DBCommands:
     def __init__(self, conn: asyncpg.Connection):
         self.conn: asyncpg.Connection = conn
 
-    async def get_or_create_user(self, _id: str = None, login: str = None, password: str = None) -> UserDTO:
-        res = await self.conn.fetchrow("SELECT * FROM users WHERE id=$1", _id)
+    async def get_or_create_user(self, user: UserDTO) -> UserDTO:
+        res = await self.conn.fetchrow("SELECT * FROM users WHERE id=$1", user.id)
 
         if res:
             return UserDTO(id=res.get('id'), login=res.get('login'), password=res.get('password'))
 
-        if not login or not password:
+        if not user.login or not user.password:
             return
 
         _id = await self._generate_id('users')
         res = await self.conn.fetchrow('INSERT INTO users VALUES ($1, $2, $3) RETURNING *',
-                                       _id, login, Hasher.get_password_hash(password))
+                                       _id, user.login, Hasher.get_password_hash(user.password))
 
         return UserDTO(id=res.get('id'), login=res.get('login'), password=res.get('password'))
 
-    async def authenticate_user(self, login: str, password: str) -> UserDTO:
-        res = await self.conn.fetchrow("SELECT * FROM users WHERE login=$1", login)
+    async def authenticate_user(self, user: UserDTO) -> UserDTO:
+        res = await self.conn.fetchrow("SELECT * FROM users WHERE login=$1", user.login)
 
         if not res:
             return

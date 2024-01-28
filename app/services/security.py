@@ -1,7 +1,7 @@
 from datetime import timedelta, datetime
 from jose import jwt
 
-from app.misc.models.authentication import JWTToken
+from app.services.db.dto.authentication import JWTToken
 from app.settings.config import JWTConfig
 
 

@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends
 
 from app.misc.di.stub import Stub
 from app.services.db.db_commands import DBCommands
-from app.misc.models.user import User, ShowUser
-from app.services.db.dto.users import UserDTO
+from app.services.db.dto.users import UserDTO, UserInput, UserOutput
 
 api_router = APIRouter()
 
 
-@api_router.post('/register', status_code=201, response_model=ShowUser)
-async def register_route(user: User, db: DBCommands = Depends(Stub(DBCommands))) -> UserDTO:
-    user = await db.get_or_create_user(login=user.login, password=user.password)
-    return ShowUser(id=user.id, login=user.login) # TODO обработка ошибок
+@api_router.post('/register', status_code=201, response_model=UserOutput)
+async def register_route(user: UserInput, db: DBCommands = Depends(Stub(DBCommands))) -> UserOutput:
+    user_dto = UserDTO(id=None, login=user.login, password=user.password)
+    user = await db.get_or_create_user(user_dto)
+    return UserOutput(id=user.id, login=user.login)
