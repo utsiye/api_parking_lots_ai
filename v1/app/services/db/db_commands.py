@@ -4,7 +4,7 @@ import string
 import asyncpg
 
 from .dto.users import UserDTO
-from app.services.hasher import Hasher
+from v1.app.services.hasher import Hasher
 
 
 class DBCommands:

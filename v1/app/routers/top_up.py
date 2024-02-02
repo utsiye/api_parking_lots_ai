@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends
 
-from app.misc.di.stub import Stub
-from app.services.db.db_commands import DBCommands
-from app.services.db.dto.users import UserDTO, UserInput, UserOutput
-from app.services.db.dto.payment import PaymentInput
+from v1.app.misc.di.stub import Stub
+from v1.app.services.db.db_commands import DBCommands
+from v1.app.services.db.dto.users import UserDTO
 
 api_router = APIRouter()
 

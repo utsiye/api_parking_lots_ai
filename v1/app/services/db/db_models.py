@@ -1,7 +1,7 @@
 import asyncpg
 
-from app.misc.logger import logger
-from app.settings.config import load_config
+from v1.app.misc.logger import logger
+from v1.app.settings.config import load_config
 
 
 async def create_all_tables(pool: asyncpg.Pool):

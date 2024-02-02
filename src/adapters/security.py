@@ -1,8 +1,8 @@
 from datetime import timedelta, datetime
 from jose import jwt
 
-from app.services.db.dto.authentication import JWTToken
-from app.settings.config import JWTConfig
+from v1.app.services.db.dto.authentication import JWTToken
+from v1.app.settings.config import JWTConfig
 
 
 class Protector:

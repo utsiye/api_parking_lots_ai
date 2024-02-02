@@ -4,10 +4,10 @@ from contextlib import asynccontextmanager
 from fastapi import Depends
 import asyncpg
 
-from app.services.db.db_commands import DBCommands
-from app.misc.di.stub import Stub
-from app.services.security import Protector
-from app.settings.config import Config, load_config
+from v1.app.services.db.db_commands import DBCommands
+from v1.app.misc.di.stub import Stub
+from v1.app.services.security import Protector
+from v1.app.settings.config import Config
 
 
 @asynccontextmanager

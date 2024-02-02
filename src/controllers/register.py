@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
-from app.misc.di.stub import Stub
-from app.services.db.db_commands import DBCommands
-from app.services.db.dto.users import UserDTO, UserInput, UserOutput
+from src.di.stub import Stub
+from src.adapters.db.db_commands import DBCommands
+from src.misc.dto.users import UserDTO, UserInput, UserOutput
 
 api_router = APIRouter()
 
