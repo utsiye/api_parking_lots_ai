@@ -9,10 +9,6 @@ async def initialize_db(database_url: str) -> async_sessionmaker:
 
     engine = create_async_engine(database_url)
 
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    print('Tables were created')
-
     return create_sessionmaker(engine)
 
 def create_engine(database_url: str) -> AsyncEngine:

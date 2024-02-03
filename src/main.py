@@ -1,12 +1,11 @@
 import uvicorn as uvi
-import asyncio
 
 from fastapi import FastAPI
 
 from controllers.register import api_router as register_router
 from controllers.login import api_router as login_router
 from misc.logger import logger
-from adapters.db.main import initialize_db
+from misc.lifespan import lifespan
 from settings.config import load_config
 from di.setup import setup_di
 
@@ -17,11 +16,11 @@ def include_routers(app: FastAPI):
 
 def build_app():
     logger.info("Starting app")
-    app = FastAPI()
+    app = FastAPI(lifespan=lifespan)
     config = load_config()
-    session_maker = initialize_db(config.db.url)
+    app.state.config = config
 
-    setup_di(app, config, session_maker)
+    setup_di(app, config)
     include_routers(app)
 
     return app
@@ -33,5 +32,6 @@ if __name__ == "__main__":
         factory=True,
         host="0.0.0.0",
         port=80,
+        tracemalloc=True
         # reload=True,
     )
