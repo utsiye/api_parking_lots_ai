@@ -9,5 +9,5 @@ class Hasher:
         return pwd_context.verify(plain_password, hashed_password)
 
     @staticmethod
-    def get_password_hash(password) -> str:
+    def get_password_hash(password: str) -> str:
         return pwd_context.hash(password)

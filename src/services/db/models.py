@@ -14,7 +14,7 @@ class User(Base):
 
 class Ticket(Base):
     __tablename__ = "tickets"
-    user_id = Column(String(255), ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     ticket_id = Column(String(255), primary_key=True)
     status = Column(String(255), nullable=False)
     datetime = Column(DateTime, nullable=False)
@@ -24,7 +24,7 @@ class Ticket(Base):
 class Request(Base):
     __tablename__ = 'requests'
 
-    user_id = Column(String(255), ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     request_id = Column(String(255), primary_key=True)
     datetime = Column(DateTime, nullable=False)
     source_file_size = Column(Float, nullable=False)
@@ -34,7 +34,7 @@ class Request(Base):
 class Payment(Base):
     __tablename__ = 'payments'
 
-    user_id = Column(String(255), ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     transaction_id = Column(String(255), primary_key=True)
     datetime = Column(DateTime, nullable=False)
     credits = Column(Float, nullable=False)

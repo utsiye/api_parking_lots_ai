@@ -2,8 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from fastapi import FastAPI
 
 from .stub import Stub
-from src.adapters.db.db_commands import DBCommands
-from src.adapters.security import Protector
+from src.services.db.db_commands import DBCommands
+from src.services.security import Protector
 from .factories import di_db_gateway_factory, di_connection_factory, di_protector_factory
 from src.settings.config import Config
 
