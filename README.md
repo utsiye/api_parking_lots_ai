@@ -1,5 +1,3 @@
-# SpaceFinder AI
-
 ![SpaceFinder AI Logo](images/logo.png)
 
 SpaceFinder AI is a Python project aimed at simplifying the process of finding free parking spaces in crowded places using artificial intelligence. The project uses YOLOv8 architecture to analyze images or video images.
