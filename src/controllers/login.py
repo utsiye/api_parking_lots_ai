@@ -11,10 +11,10 @@ from src.exceptions.classes.auth import UnauthorizedException
 api_router = APIRouter()
 
 
-@api_router.post('/login', status_code=200, response_model=JWTToken)
+@api_router.post('/login', status_code=200)
 async def login_route(user: UserInput, protector: Protector = Depends(Stub(Protector)),
                       db: DBCommands = Depends(Stub(DBCommands))) -> JWTToken:
-    user_dto = UserDTO(id=None, login=user.login, password=user.password)
+    user_dto = UserDTO(login=user.login, password=user.password)
     auth_user = await db.authenticate_user(user_dto)
     if not auth_user:
         raise UnauthorizedException
