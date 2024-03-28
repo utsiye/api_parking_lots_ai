@@ -11,17 +11,17 @@ async def initialize_db(database_url: str) -> async_sessionmaker:
 
     engine = create_async_engine(database_url)
 
-    async with engine.begin() as conn:
-        #await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+    '''async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)'''
 
     return create_sessionmaker(engine)
 
 def create_engine(database_url: str) -> AsyncEngine:
     logger.info("Connecting to database")
 
-    #subprocess.run(['alembic', 'downgrade', 'head'])
-    #subprocess.run(['alembic', 'upgrade', 'head'])
+    # subprocess.run(['alembic', 'downgrade', 'head'])
+    # subprocess.run(['alembic', 'upgrade', 'head'])
 
     return create_async_engine(database_url)
 
