@@ -20,8 +20,8 @@ async def initialize_db(database_url: str) -> async_sessionmaker:
 def create_engine(database_url: str) -> AsyncEngine:
     logger.info("Connecting to database")
 
-    # subprocess.run(['alembic', 'downgrade', 'head'])
-    # subprocess.run(['alembic', 'upgrade', 'head'])
+    #subprocess.run(['alembic', 'downgrade', 'head'])
+    #subprocess.run(['alembic', 'upgrade', 'head'])
 
     return create_async_engine(database_url)
 
