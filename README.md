@@ -20,6 +20,6 @@ SpaceFinder AI is a Python project aimed at simplifying the process of finding f
 
 ## Demo
 
-![SpaceFinder AI Demo](images/demo.mp4)
+![SpaceFinder AI Demo](images/demo.gif)
 
 Happy parking! 🚗🅿️
