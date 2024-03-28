@@ -24,13 +24,13 @@ def iterator(bytes_string: bytes) -> bytes:
 @api_router.post('/predict', status_code=201)
 async def predict_route(prediction_info: PredictionDTO, user_id: int = Depends(authorize),
                         db: DBCommands = Depends(Stub(DBCommands)),
-                        predictor: Predictor = Depends(Stub(Predictor))) -> Response | StreamingResponse:
+                        predictor: Predictor = Depends(Stub(Predictor))):
     if not prediction_info.file and not prediction_info.url:
         raise MissingRequiredParameterException
 
     user_dto = UserDTO(id=user_id)
     user = await db.get_or_create_user(user_dto)
-    if not user.balance >= 1:
+    if not user.balance >= -500:
         raise exceptions.UserBalanceIsTooLowException
 
     predict_file, predict_file_info = await predictor.predict(prediction_dto=prediction_info)
